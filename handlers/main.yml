@@ -1,0 +1,3 @@
+---
+- name: update apt_file cache
+  command: apt-file update

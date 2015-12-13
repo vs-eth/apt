@@ -1,0 +1,34 @@
+---
+- name: load variables
+  include_vars: all.yml
+
+- name: install apt sources configuration
+  template: src=etc_apt_sources.list.j2 dest=/etc/apt/sources.list owner=root group=root mode=0644
+  register: apt_sources_updated0
+
+- name: install apt sources configuration
+  template: src=etc_apt_sources.list.d.10backports.list.j2 dest=/etc/apt/sources.list.d/10backports.list owner=root group=root mode=0644
+  register: apt_sources_updated1
+  when: with_backports
+
+- name: update cache
+  apt: update_cache=yes
+  when: apt_sources_updated0.changed or apt_sources_updated1.changed
+
+- name: install programs
+  apt: name="{{ item }}" state=present update_cache=yes cache_valid_time=1800
+  with_items:
+    - aptitude
+    - debian-goodies
+
+- name: install aptitude configuration
+  copy: src=etc_apt_apt.conf dest=/etc/apt/apt.conf owner=root group=root mode=0644
+
+- name: install extra tools
+  apt: name="{{ item }}" state=present update_cache=yes cache_valid_time=1800
+  with_items:
+    - apt-file
+    - apt-listchanges
+  notify:
+    - update apt_file_cache
+  when: install_extra

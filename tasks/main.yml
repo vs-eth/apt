@@ -13,7 +13,7 @@
 
 - name: install apt sources configuration
   template:
-    src: etc_apt_sources.list.d.10backports.list.j2
+    src: etc_apt_sources.list.d_10backports.list.j2
     dest: /etc/apt/sources.list.d/10backports.list
     owner: root
     group: root

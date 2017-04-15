@@ -19,7 +19,7 @@
     group: root
     mode: 0644
   notify: apt update cache
-  when: with_backports
+  when: apt_with_backports
 
 - meta: flush_handlers
 
@@ -52,4 +52,4 @@
     - apt-listchanges
   notify:
     - update apt_file_cache
-  when: install_extra
+  when: apt_install_extra

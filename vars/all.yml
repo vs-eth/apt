@@ -1,2 +1,2 @@
 ---
-package_types: "main contrib non-free"
+apt_package_types: "main contrib non-free"

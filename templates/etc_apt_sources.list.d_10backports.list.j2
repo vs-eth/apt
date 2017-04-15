@@ -1,4 +1,4 @@
 # Managed with Ansible
 # backports
-deb http://debian.ethz.ch/debian jessie-backports main
-deb-src http://debian.ethz.ch/debian jessie-backports main
+deb http://debian.ethz.ch/debian {{ ansible_distribution_release }}-backports main
+deb-src http://debian.ethz.ch/debian {{ ansible_distribution_release }}-backports main

@@ -9,7 +9,7 @@
     owner: root
     group: root
     mode: 0644
-  register: apt_sources_updated0
+  notify: apt update cache
 
 - name: install apt sources configuration
   template:
@@ -18,13 +18,10 @@
     owner: root
     group: root
     mode: 0644
-  register: apt_sources_updated1
-  when: with_backports
+  notify: apt update cache
+  when: apt_with_backports
 
-- name: update cache
-  apt:
-    update_cache: yes
-  when: apt_sources_updated0.changed or apt_sources_updated1.changed
+- meta: flush_handlers
 
 - name: install programs
   apt:
@@ -55,4 +52,4 @@
     - apt-listchanges
   notify:
     - update apt_file_cache
-  when: install_extra
+  when: apt_install_extra

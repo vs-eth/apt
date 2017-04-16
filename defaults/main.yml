@@ -1,6 +1,6 @@
 ---
 # If set to true, install additional tools
-install_extra: false
+apt_install_extra: false
 
 # If set to true, backports will be used too
-with_backports: False
+apt_with_backports: False

@@ -35,8 +35,8 @@
 
 - name: install aptitude configuration
   copy:
-    src: etc_apt_apt.conf
-    dest: /etc/apt/apt.conf
+    src: etc_apt_apt.conf.d_99aptitude
+    dest: /etc/apt/apt.conf.d/99aptitude
     owner: root
     group: root
     mode: 0644

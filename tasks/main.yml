@@ -3,6 +3,7 @@
   include_vars: all.yml
 
 - name: install apt sources configuration
+  become: True
   template:
     src: etc_apt_sources.list.j2
     dest: /etc/apt/sources.list
@@ -12,6 +13,7 @@
   notify: apt update cache
 
 - name: install apt sources configuration
+  become: True
   template:
     src: etc_apt_sources.list.d_10backports.list.j2
     dest: /etc/apt/sources.list.d/10backports.list
@@ -24,6 +26,7 @@
 - meta: flush_handlers
 
 - name: install programs
+  become: True
   apt:
    name: "{{ item }}"
    state: present
@@ -34,6 +37,7 @@
     - debian-goodies
 
 - name: install aptitude configuration
+  become: True
   copy:
     src: etc_apt_apt.conf.d_99aptitude
     dest: /etc/apt/apt.conf.d/99aptitude
@@ -42,6 +46,7 @@
     mode: 0644
 
 - name: install extra tools
+  become: True
   apt:
     name: "{{ item }}"
     state: present
@@ -50,6 +55,4 @@
   with_items:
     - apt-file
     - apt-listchanges
-  notify:
-    - update apt_file_cache
   when: apt_install_extra

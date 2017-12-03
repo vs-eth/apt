@@ -36,6 +36,12 @@
     - aptitude
     - debian-goodies
 
+- name: delete apt.conf
+  become: True
+  file:
+    path: /etc/apt/apt.conf
+    state: absent
+
 - name: install aptitude configuration
   become: True
   copy:

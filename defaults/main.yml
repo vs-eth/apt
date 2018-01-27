@@ -1,6 +1,12 @@
 ---
-# If set to true, install additional tools
-apt_install_extra: false
+# If set to True, install additional tools
+apt_install_extra: False
 
-# If set to true, backports will be used too
+# If set to True, backports will be used too
 apt_with_backports: False
+
+# If set to True, the internal SOSETH APT repo and its key will be added
+apt_add_sos_repo: False
+
+# If set to True, deb-src repos will be added
+apt_add_src: False

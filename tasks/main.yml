@@ -2,10 +2,18 @@
 - name: load variables
   include_vars: all.yml
 
+- set_fact:
+    apt_sources_list: etc_apt_sources.list_debian.j2
+  when: ansible_distribution == "Debian"
+
+- set_fact:
+    apt_sources_list: etc_apt_sources.list_ubuntu.j2
+  when: ansible_distribution == "Ubuntu"
+
 - name: install apt sources configuration
   become: True
   template:
-    src: etc_apt_sources.list.j2
+    src: "{{ apt_sources_list }}"
     dest: /etc/apt/sources.list
     owner: root
     group: root
@@ -62,3 +70,16 @@
     - apt-file
     - apt-listchanges
   when: apt_install_extra
+
+- name: add SOSETH repo
+  block:
+    - apt_repository:
+        repo: deb http://apt.sos.ethz.ch/ sos-stretch main
+        state: present
+        filename: sos
+      notify: apt update cache
+    - apt_key:
+        data: "{{ lookup('file', 'soseth_apt_keyring.gpg.key') }}"
+        state: present
+  become: True
+  when: apt_add_sos_repo

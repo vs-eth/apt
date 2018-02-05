@@ -12,6 +12,7 @@
 
 - name: install apt sources configuration
   become: True
+  when: not apt_is_special_snowflake
   template:
     src: "{{ apt_sources_list }}"
     dest: /etc/apt/sources.list

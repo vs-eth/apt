@@ -10,3 +10,6 @@ apt_add_sos_repo: False
 
 # If set to True, deb-src repos will be added
 apt_add_src: False
+
+# If set to true, main apt config will not be applied.
+apt_is_special_snowflake: False

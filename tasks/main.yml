@@ -74,13 +74,13 @@
 
 - name: add SOSETH repo
   block:
+    - apt_key:
+        data: "{{ lookup('file', 'soseth_apt_keyring.gpg.key') }}"
+        state: present
     - apt_repository:
         repo: deb http://apt.sos.ethz.ch/ sos-stretch main
         state: present
         filename: sos
       notify: apt update cache
-    - apt_key:
-        data: "{{ lookup('file', 'soseth_apt_keyring.gpg.key') }}"
-        state: present
   become: True
   when: apt_add_sos_repo

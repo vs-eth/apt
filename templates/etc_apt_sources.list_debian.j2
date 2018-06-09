@@ -1,16 +1,16 @@
 # Managed with Ansible
-deb http://debian.ethz.ch/debian/ {{ ansible_distribution_release }} {{ apt_debian_package_types }}
+deb {{ apt_default_mirror }} {{ ansible_distribution_release }} {{ apt_debian_package_types }}
 {% if apt_add_src %}
-deb-src http://debian.ethz.ch/debian/ {{ ansible_distribution_release }} {{ apt_debian_package_types }}
+deb-src {{ apt_default_mirror }} {{ ansible_distribution_release }} {{ apt_debian_package_types }}
 {% endif %}
 
-deb http://security.debian.org {{ ansible_distribution_release }}/updates {{ apt_debian_package_types }}
+deb {{ apt_security_mirror }} {{ ansible_distribution_release }}/updates {{ apt_debian_package_types }}
 {% if apt_add_src %}
-deb-src http://security.debian.org {{ ansible_distribution_release }}/updates {{ apt_debian_package_types }}
+deb-src {{ apt_security_mirror }} {{ ansible_distribution_release }}/updates {{ apt_debian_package_types }}
 {% endif %}
 
-deb http://debian.ethz.ch/debian/ {{ ansible_distribution_release }}-updates {{ apt_debian_package_types }}
+deb {{ apt_default_mirror }} {{ ansible_distribution_release }}-updates {{ apt_debian_package_types }}
 {% if apt_add_src %}
-deb-src http://debian.ethz.ch/debian/ {{ ansible_distribution_release }}-updates {{ apt_debian_package_types }}
+deb-src {{ apt_default_mirror }} {{ ansible_distribution_release }}-updates {{ apt_debian_package_types }}
 {% endif %}
 

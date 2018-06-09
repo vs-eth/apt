@@ -1,3 +1,0 @@
----
-apt_debian_package_types: "main contrib non-free"
-apt_ubuntu_package_types: "main universe multiverse"

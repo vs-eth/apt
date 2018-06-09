@@ -1,93 +1,88 @@
 ---
-- name: load variables
-  include_vars: all.yml
-
-- set_fact:
-    apt_sources_list: etc_apt_sources.list_debian.j2
-  when: ansible_distribution == "Debian"
-
-- set_fact:
-    apt_sources_list: etc_apt_sources.list_ubuntu.j2
-  when: ansible_distribution == "Ubuntu"
-
-- name: install apt sources configuration
-  become: True
-  when: not apt_is_special_snowflake
-  template:
-    src: "{{ apt_sources_list }}"
-    dest: /etc/apt/sources.list
-    owner: root
-    group: root
-    mode: 0644
-  notify: apt update cache
-
-- name: install apt sources configuration
-  become: True
-  template:
-    src: etc_apt_sources.list.d_10backports.list.j2
-    dest: /etc/apt/sources.list.d/10backports.list
-    owner: root
-    group: root
-    mode: 0644
-  notify: apt update cache
-  when: apt_with_backports
-
-- meta: flush_handlers
-
-- name: install programs
-  become: True
-  apt:
-   name: "{{ item }}"
-   state: present
-   update_cache: yes
-   cache_valid_time: 1800
-  with_items:
-    - aptitude
-    - debian-goodies
-
-- name: delete apt.conf
-  become: True
-  file:
-    path: /etc/apt/apt.conf
-    state: absent
-
-- name: install aptitude configuration
-  become: True
-  copy:
-    src: etc_apt_apt.conf.d_99aptitude
-    dest: /etc/apt/apt.conf.d/99aptitude
-    owner: root
-    group: root
-    mode: 0644
-
-- name: install extra tools
-  become: True
-  apt:
-    name: "{{ item }}"
-    state: present
-    update_cache: yes
-    cache_valid_time: 1800
-  with_items:
-    - apt-file
-    - apt-listchanges
-  when: apt_install_extra
-
-- name: add SOSETH repo
-  block:
-    - name: Add SOSETH repo key
-      apt_key:
-        data: "{{ lookup('file', 'soseth_apt_keyring.gpg.key') }}"
-        state: present
-    - name: Remove old SOSETH repo
-      apt_repository:
-        repo: deb http://apt.sos.ethz.ch/ sos-stretch main
-        state: absent
-        filename: sos
-    - name: Add SOSETH repo
-      apt_repository:
-        repo: deb http://apt.sos.ethz.ch/{{ ansible_distribution_release }}/ {{ ansible_distribution_release }} main
-        state: present
-        filename: sos
-      notify: apt update cache
-  become: True
-  when: apt_add_sos_repo
+  - name: load variables
+    include_vars: all.yml
+  
+  - set_fact:
+      apt_sources_list: etc_apt_sources.list_debian.j2
+    when: ansible_distribution == "Debian"
+  
+  - set_fact:
+      apt_sources_list: etc_apt_sources.list_ubuntu.j2
+    when: ansible_distribution == "Ubuntu"
+  
+  - name: install apt sources configuration
+    become: True
+    when: not apt_is_special_snowflake
+    template:
+      src: "{{ apt_sources_list }}"
+      dest: /etc/apt/sources.list
+      owner: root
+      group: root
+      mode: 0644
+    notify: apt update cache
+  
+  - name: install apt sources configuration
+    become: True
+    template:
+      src: etc_apt_sources.list.d_10backports.list.j2
+      dest: /etc/apt/sources.list.d/10backports.list
+      owner: root
+      group: root
+      mode: 0644
+    notify: apt update cache
+    when: apt_with_backports
+  
+  - meta: flush_handlers
+  
+  - name: install programs
+    become: True
+    apt:
+     name: "{{ item }}"
+     state: present
+     update_cache: yes
+     cache_valid_time: 1800
+    with_items:
+      - aptitude
+      - debian-goodies
+  
+  - name: delete apt.conf
+    become: True
+    file:
+      path: /etc/apt/apt.conf
+      state: absent
+  
+  - name: install aptitude configuration
+    become: True
+    copy:
+      src: etc_apt_apt.conf.d_99aptitude
+      dest: /etc/apt/apt.conf.d/99aptitude
+      owner: root
+      group: root
+      mode: 0644
+  
+  - name: install extra tools
+    become: True
+    apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: yes
+      cache_valid_time: 1800
+    with_items:
+      - apt-file
+      - apt-listchanges
+    when: apt_install_extra
+  
+  - name: Add custom apt repo
+    block:
+      - name: Add custom repo key
+        apt_key:
+          data: "{{ apt_custom_repo_key }}"
+          state: present
+      - name: Add custom repo
+        apt_repository:
+          repo: "{{ apt_custom_repo_url }}"
+          state: present
+          filename: sos
+        notify: apt update cache
+    become: True
+    when: apt_add_custom_repo

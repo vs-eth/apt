@@ -1,16 +1,16 @@
 # Managed with Ansible
-deb http://ubuntu.ethz.ch/ubuntu/ {{ ansible_distribution_release }} {{ apt_ubuntu_package_types }}
+deb {{ apt_ubuntu_mirror }} {{ ansible_distribution_release }} {{ apt_ubuntu_package_types }}
 {% if apt_add_src %}
-deb-src http://ubuntu.ethz.ch/ubuntu/ {{ ansible_distribution_release }} {{ apt_ubuntu_package_types }}
+deb-src {{ apt_ubuntu_mirror }} {{ ansible_distribution_release }} {{ apt_ubuntu_package_types }}
 {% endif %}
 
-deb http://security.ubuntu.com/ubuntu/ {{ ansible_distribution_release }}-security {{ apt_ubuntu_package_types }}
+deb {{ apt_ubuntu_security_mirror }} {{ ansible_distribution_release }}-security {{ apt_ubuntu_package_types }}
 {% if apt_add_src %}
-deb-src http://security.ubuntu.com/ubuntu/ {{ ansible_distribution_release }}-security {{ apt_ubuntu_package_types }}
+deb-src {{ apt_ubuntu_security_mirror }} {{ ansible_distribution_release }}-security {{ apt_ubuntu_package_types }}
 {% endif %}
 
-deb http://ubuntu.ethz.ch/ubuntu/ {{ ansible_distribution_release }}-updates {{ apt_ubuntu_package_types }}
+deb {{ apt_ubuntu_mirror }} {{ ansible_distribution_release }}-updates {{ apt_ubuntu_package_types }}
 {% if apt_add_src %}
-deb-src http://ubuntu.ethz.ch/ubuntu/ {{ ansible_distribution_release }}-updates {{ apt_ubuntu_package_types }}
+deb-src {{ apt_ubuntu_mirror }} {{ ansible_distribution_release }}-updates {{ apt_ubuntu_package_types }}
 {% endif %}
 

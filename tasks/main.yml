@@ -1,7 +1,4 @@
 ---
-  - name: load variables
-    include_vars: all.yml
-  
   - set_fact:
       apt_sources_list: etc_apt_sources.list_debian.j2
     when: ansible_distribution == "Debian"
@@ -12,7 +9,6 @@
   
   - name: install apt sources configuration
     become: True
-    when: not apt_is_special_snowflake
     template:
       src: "{{ apt_sources_list }}"
       dest: /etc/apt/sources.list
@@ -20,6 +16,7 @@
       group: root
       mode: 0644
     notify: apt update cache
+    when: not apt_is_special_snowflake
   
   - name: install apt sources configuration
     become: True
@@ -82,7 +79,6 @@
         apt_repository:
           repo: "{{ apt_custom_repo_url }}"
           state: present
-          filename: sos
         notify: apt update cache
     become: True
     when: apt_add_custom_repo

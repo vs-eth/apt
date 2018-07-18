@@ -7,14 +7,14 @@ apt_with_backports: False
 
 # If set to True, a custom APT repo and its key will be added
 apt_add_custom_repo: False
-apt_custom_repo_url: False
-apt_custom_repo_key: False
+apt_custom_repo_url: ""
+apt_custom_repo_key: ""
 
 # Which mirrors should we use?
 apt_default_mirror: "http://debian.ethz.ch/debian/"
 apt_security_mirror: "http://security.debian.org"
 apt_ubuntu_mirror: "http://ubuntu.ethz.ch/ubuntu/"
-apt_ubuntu_security_mirror: http://security.ubuntu.com/ubuntu/"
+apt_ubuntu_security_mirror: "http://security.ubuntu.com/ubuntu/"
 
 # If set to True, deb-src repos will be added
 apt_add_src: False

@@ -1,4 +1,9 @@
 ---
+  - name: Default to {{ apt_default_unknown_debian }} when ansible can't read out release name on debian
+    set_fact:
+      ansible_distribution_release: "{{ apt_default_unknown_debian }}"
+    when: ansible_distribution_release == "NA" and ansible_distribution == "Debian"
+
   - set_fact:
       apt_sources_list: etc_apt_sources.list_debian.j2
     when: ansible_distribution == "Debian"

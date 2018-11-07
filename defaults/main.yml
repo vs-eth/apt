@@ -25,3 +25,6 @@ apt_is_special_snowflake: False
 # Which sections should we add?
 apt_debian_package_types: "main contrib non-free"
 apt_ubuntu_package_types: "main universe multiverse"
+
+# Which release to default to if ansible can't resolve the relase correctly?
+apt_default_unknown_debian: "buster"

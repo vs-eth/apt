@@ -39,12 +39,11 @@
   - name: install programs
     become: True
     apt:
-     name: "{{ item }}"
+     name:
+       - debian-goodies
      state: present
      update_cache: yes
      cache_valid_time: 1800
-    with_items:
-      - debian-goodies
 
   - name: delete apt.conf
     become: True
@@ -55,13 +54,12 @@
   - name: install extra tools
     become: True
     apt:
-      name: "{{ item }}"
+      name:
+        - aptitude
+        - apt-file
       state: present
       update_cache: yes
       cache_valid_time: 1800
-    with_items:
-      - aptitude
-      - apt-file
     when: apt_install_extra
 
   - name: install aptitude configuration

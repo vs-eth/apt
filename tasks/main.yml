@@ -7,11 +7,11 @@
   - set_fact:
       apt_sources_list: etc_apt_sources.list_debian.j2
     when: ansible_distribution == "Debian"
-  
+
   - set_fact:
       apt_sources_list: etc_apt_sources.list_ubuntu.j2
     when: ansible_distribution == "Ubuntu"
-  
+
   - name: install apt sources configuration
     become: True
     template:
@@ -22,7 +22,7 @@
       mode: 0644
     notify: apt update cache
     when: not apt_is_special_snowflake
-  
+
   - name: install apt sources configuration
     become: True
     template:
@@ -33,9 +33,9 @@
       mode: 0644
     notify: apt update cache
     when: apt_with_backports
-  
+
   - meta: flush_handlers
-  
+
   - name: install programs
     become: True
     apt:
@@ -45,13 +45,13 @@
      cache_valid_time: 1800
     with_items:
       - debian-goodies
-  
+
   - name: delete apt.conf
     become: True
     file:
       path: /etc/apt/apt.conf
       state: absent
-  
+
   - name: install extra tools
     become: True
     apt:
@@ -63,7 +63,7 @@
       - aptitude
       - apt-file
     when: apt_install_extra
-  
+
   - name: install aptitude configuration
     become: True
     copy:

@@ -28,3 +28,6 @@ apt_ubuntu_package_types: "main universe multiverse"
 
 # Which release to default to if ansible can't resolve the relase correctly?
 apt_default_unknown_debian: "buster"
+
+# Whether to automatically install updates
+apt_unattended_upgrades: False

@@ -18,3 +18,4 @@ Configuration of package management tools.
 | `apt_debian_package_types` | `main contrib non-free` | Repo sections to add for debian |
 | `apt_ubuntu_package_types` | `main universe multiverse` | Repo sections to add for ubuntu |
 | `apt_default_unknown_debian` | `buster` | Release to default to if ansible can't detect it |
+| `apt_unattended_upgrades` | `False` | Whether to enable automatic, unattended upgrades |

@@ -31,3 +31,6 @@ apt_default_unknown_debian: "buster"
 
 # Whether to automatically install updates
 apt_unattended_upgrades: False
+
+# If set, install host-specific packages
+host_pkgs: []

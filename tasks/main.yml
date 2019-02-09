@@ -97,3 +97,10 @@
         notify: apt update cache
     become: True
     when: apt_add_custom_repo
+
+  - name: Install host-specific programs
+    become: True
+    when: host_pkgs != []
+    apt:
+      name: "{{ host_pkgs }}"
+      state: present

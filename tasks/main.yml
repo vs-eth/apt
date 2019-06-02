@@ -32,7 +32,7 @@
       group: root
       mode: 0644
     notify: apt update cache
-    when: apt_with_backports
+    when: apt_with_backports | bool
 
   - meta: flush_handlers
 
@@ -49,7 +49,7 @@
 
   - name: Enable unattended upgrades
     become: True
-    when: apt_unattended_upgrades
+    when: apt_unattended_upgrades | bool
     template:
       src: 50unattended-upgrades.j2
       dest: /etc/apt/apt.conf.d/50unattended-upgrades
@@ -72,7 +72,7 @@
       state: present
       update_cache: yes
       cache_valid_time: 1800
-    when: apt_install_extra
+    when: apt_install_extra | bool
 
   - name: install aptitude configuration
     become: True
@@ -82,7 +82,7 @@
       owner: root
       group: root
       mode: 0644
-    when: apt_install_extra
+    when: apt_install_extra | bool
 
   - name: Add custom apt repo
     block:
@@ -96,7 +96,7 @@
           state: present
         notify: apt update cache
     become: True
-    when: apt_add_custom_repo
+    when: apt_add_custom_repo | bool
 
   - name: Install host-specific programs
     become: True

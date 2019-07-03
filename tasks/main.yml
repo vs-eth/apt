@@ -42,7 +42,6 @@
      name:
        - debian-goodies
        - unattended-upgrades
-       - apt-listchanges
      state: present
      update_cache: yes
      cache_valid_time: 1800

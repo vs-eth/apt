@@ -34,6 +34,20 @@
     notify: apt update cache
     when: apt_with_backports | bool
 
+  - name: Add custom apt repo
+    block:
+      - name: Add custom repo key
+        apt_key:
+          data: "{{ apt_custom_repo_key }}"
+          state: present
+      - name: Add custom repo
+        apt_repository:
+          repo: "{{ apt_custom_repo_url }}"
+          state: present
+        notify: apt update cache
+    become: True
+    when: apt_add_custom_repo | bool
+
   - meta: flush_handlers
 
   - name: install programs
@@ -82,20 +96,6 @@
       group: root
       mode: 0644
     when: apt_install_extra | bool
-
-  - name: Add custom apt repo
-    block:
-      - name: Add custom repo key
-        apt_key:
-          data: "{{ apt_custom_repo_key }}"
-          state: present
-      - name: Add custom repo
-        apt_repository:
-          repo: "{{ apt_custom_repo_url }}"
-          state: present
-        notify: apt update cache
-    become: True
-    when: apt_add_custom_repo | bool
 
   - name: Install host-specific programs
     become: True

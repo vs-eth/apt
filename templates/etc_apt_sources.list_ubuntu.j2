@@ -4,11 +4,13 @@ deb {{ apt_ubuntu_mirror }} {{ ansible_distribution_release }} {{ apt_ubuntu_pac
 deb-src {{ apt_ubuntu_mirror }} {{ ansible_distribution_release }} {{ apt_ubuntu_package_types }}
 {% endif %}
 
+{% if apt_security_mirror_enabled %}
 deb {{ apt_ubuntu_security_mirror }} {{ ansible_distribution_release }}-security {{ apt_ubuntu_package_types }}
 {% if apt_add_src %}
 deb-src {{ apt_ubuntu_security_mirror }} {{ ansible_distribution_release }}-security {{ apt_ubuntu_package_types }}
 {% endif %}
 
+{% endif %}
 deb {{ apt_ubuntu_mirror }} {{ ansible_distribution_release }}-updates {{ apt_ubuntu_package_types }}
 {% if apt_add_src %}
 deb-src {{ apt_ubuntu_mirror }} {{ ansible_distribution_release }}-updates {{ apt_ubuntu_package_types }}
